@@ -15,6 +15,7 @@ app.get("/joke", auth, async (req, res) => {
         const {data} = await axios.get(`${JOKE_SERVICE_URL}/joke`);
         res.json(data);
     } catch (err) {
+        console.log(err);
         res.status(500).json({error: 'failed to get your joke'});
     }
 
@@ -25,6 +26,7 @@ app.post("/joke", auth, async (req, res) => {
         const {data} = await axios.post(`${JOKE_SERVICE_URL}/joke`, req.body);
         res.json(data);
     } catch (err) {
+        console.log(err);
         res.status(500).json({error: 'failed to get your joke'});
     }
 });
@@ -33,7 +35,7 @@ app.get("/metrics", async (req, res) => {
     res.end(register.metrics())
 })
 const initMetrics = () => {
-    const app = process.env.APP_NAME || 'chucknorris-service'
+    const app = process.env.APP_NAME || 'api-gateway'
     register.setDefaultLabels({app})
     client.collectDefaultMetrics({register})
 }

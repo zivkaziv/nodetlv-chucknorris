@@ -10,7 +10,7 @@ services:
     expose:
       - 9090
     networks:
-      - monitoring
+      - app-network
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -26,9 +26,8 @@ services:
     expose:
       - 3000
     networks:
-      - monitoring
+      - app-network
   rabbitmq:
-    #RabbitMQ
     image: rabbitmq:3.13.2-management
     container_name: rabbitmq
     hostname: rabbitmq
@@ -42,36 +41,59 @@ services:
       - ./rabbit:/var/lib/rabbitmq
     restart: always
     networks:
-      - monitoring
-  api-gatway:
+      - app-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:15672" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  api-gateway:
     build:
-      context: api-gatway
+      context: api-gateway
+    container_name: api-gateway
+    hostname: api-gateway
+    environment:
+      JOKE_SERVICE_URL: "http://chucknorris-service:8001"
     ports:
       - 8000:8000
     expose:
       - 8000
     networks:
-      - monitoring
+      - app-network
+    depends_on:
+      - chucknorris-service
   chucknorris-service:
     build:
       context: chucknorris-service
+    container_name: chucknorris-service
+    hostname: chucknorris-service
+    environment:
+      RABBIT_CONNECTION_STRING: 'amqp://user:password@rabbitmq:5672'
     ports:
       - 8001:8001
     expose:
       - 8001
     networks:
-      - monitoring
+      - app-network
+    depends_on:
+      - rabbitmq
   notification-service:
     build:
       context: notification-service
+    container_name: notification-service
+    hostname: notification-service
+    environment:
+      RABBIT_CONNECTION_STRING: 'amqp://user:password@rabbitmq:5672'
     ports:
       - 8002:8002
     expose:
       - 8002
     networks:
-      - monitoring
+      - app-network
+    depends_on:
+      - rabbitmq
 networks:
-  monitoring:
+  app-network:
     driver: bridge
 volumes:
     prometheus_data: {}

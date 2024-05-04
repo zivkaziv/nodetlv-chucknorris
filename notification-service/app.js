@@ -17,8 +17,12 @@ const initMetrics = () => {
 }
 
 const initNotificationService = async () => {
-    const connectionString = process.env.RABBIT_CONNECTION_STRING = "amqp://user:password@localhost:5672"
-    const notificationServiceQueueName = process.env.QUEUE_NAME = "notifications"
+    const connectionString = process.env.RABBIT_CONNECTION_STRING || "amqp://user:password@localhost:5672"
+    const notificationServiceQueueName = process.env.QUEUE_NAME ||  "notifications"
+    console.log({
+        connectionString,
+        notificationServiceQueueName
+    })
     const notificationService = new NotificationService(connectionString, notificationServiceQueueName)
     await notificationService.init()
     await notificationService.consumeMessages()

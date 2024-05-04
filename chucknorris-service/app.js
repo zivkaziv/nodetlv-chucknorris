@@ -41,7 +41,7 @@ app.post("/joke", async (req, res) => {
         res.status(500).json({error: 'failed to send your joke'});
     }
 });
-app.get("/metrics", async (req, res) => {
+app.get("/metrics", (req, res) => {
     res.setHeader('Content-Type', register.contentType)
     res.end(register.metrics())
 })
@@ -52,8 +52,8 @@ const initMetrics = () => {
 }
 
 const initQueuePublisher = async () => {
-    const connectionString = process.env.RABBIT_CONNECTION_STRING = "amqp://user:password@localhost:5672"
-    const notificationServiceQueueName = process.env.QUEUE_NAME = "notifications"
+    const connectionString = process.env.RABBIT_CONNECTION_STRING || "amqp://user:password@localhost:5672"
+    const notificationServiceQueueName = process.env.QUEUE_NAME || "notifications"
     queuePublisher = new QueuePublisher(connectionString, notificationServiceQueueName)
     await queuePublisher.init()
 }
