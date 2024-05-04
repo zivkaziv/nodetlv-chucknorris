@@ -9,25 +9,25 @@ app.use(express.urlencoded({extended: true}))
 const register = new client.Registry();
 const {auth} = require("./auth");
 
-const JOKE_SERVICE_URL = process.env.JOKE_SERVICE_URL || "http://localhost:8001"
-app.get("/joke", auth, async (req, res) => {
+const FACE_SERVICE_URL = process.env.FACT_SERVICE_URL || "http://localhost:8001"
+app.get("/fact", auth, async (req, res) => {
     try {
-        const {data} = await axios.get(`${JOKE_SERVICE_URL}/joke`);
+        const {data} = await axios.get(`${FACT_SERVICE_URL}/fact`);
         res.json(data);
     } catch (err) {
         console.log(err);
-        res.status(500).json({error: 'failed to get your joke'});
+        res.status(500).json({error: 'failed to get your fact'});
     }
 
 });
 
-app.post("/joke", auth, async (req, res) => {
+app.post("/fact", auth, async (req, res) => {
     try {
-        const {data} = await axios.post(`${JOKE_SERVICE_URL}/joke`, req.body);
+        const {data} = await axios.post(`${FACT_SERVICE_URL}/fact`, req.body);
         res.json(data);
     } catch (err) {
         console.log(err);
-        res.status(500).json({error: 'failed to get your joke'});
+        res.status(500).json({error: 'failed to get your fact'});
     }
 });
 app.get("/metrics", async (req, res) => {

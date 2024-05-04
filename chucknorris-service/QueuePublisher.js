@@ -14,14 +14,13 @@ module.exports = class QueuePublisher {
         this.channel.assertQueue(this.queueName);
     }
 
-    async publish(joke, email){
-        const result = await this.channel.sendToQueue(
+    async publish(fact, email){
+        return await this.channel.sendToQueue(
             this.queueName,
             Buffer.from(JSON.stringify({
-                joke,
+                fact,
                 email
             }))
         );
-        return result;
     }
 }

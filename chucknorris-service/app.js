@@ -1,7 +1,7 @@
 const express = require("express");
 const client = require("prom-client");
 const validator = require("email-validator");
-const JokeService = require("./JokeService")
+const FactService = require("./FactService")
 const QueuePublisher = require("./QueuePublisher")
 
 const app = express();
@@ -9,36 +9,36 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 const register = new client.Registry();
-const jokeService = new JokeService();
+const factService = new FactService();
 let queuePublisher = undefined;
-app.get("/joke", async (req, res) => {
+app.get("/fact", async (req, res) => {
     try {
-        const joke = jokeService.getRandomJoke();
-        res.json(joke);
+        const fact = factService.getRandomFact();
+        res.json(fact);
     } catch (err) {
-        res.status(500).json({error: 'failed to get your joke'});
+        res.status(500).json({error: 'failed to get your fact'});
     }
 });
 
-app.post("/joke", async (req, res) => {
+app.post("/fact", async (req, res) => {
     try {
         const email = req.body.email;
         const isValidEmail = validator.validate(email);
         if (!isValidEmail) {
             return res.status(400).json({error: `email ${email} is not valid`})
         }
-        const joke = jokeService.getRandomJoke();
-        const is_published = await queuePublisher.publish(joke, email)
+        const fact = factService.getRandomFact();
+        const is_published = await queuePublisher.publish(fact, email)
         res.json({
             status: "success",
             data: {
-                joke,
+                fact,
                 email,
                 is_published
             }
         });
     } catch (err) {
-        res.status(500).json({error: 'failed to send your joke'});
+        res.status(500).json({error: 'failed to send your fact'});
     }
 });
 app.get("/metrics", (req, res) => {
@@ -59,7 +59,7 @@ const initQueuePublisher = async () => {
 }
 
 app.init = async () => {
-    await jokeService.initJokes();
+    await factService.initFacts();
     await initQueuePublisher()
     initMetrics();
 }
