@@ -1,5 +1,6 @@
 const express = require("express");
 const client = require("prom-client");
+const validator = require("email-validator");
 const JokeService = require("./JokeService")
 const QueuePublisher = require("./QueuePublisher")
 
@@ -22,6 +23,10 @@ app.get("/joke", async (req, res) => {
 app.post("/joke", async (req, res) => {
     try {
         const email = req.body.email;
+        const isValidEmail = validator.validate(email);
+        if (!isValidEmail) {
+            return res.status(400).json({error: `email ${email} is not valid`})
+        }
         const joke = jokeService.getRandomJoke();
         const is_published = await queuePublisher.publish(joke, email)
         res.json({

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --config jest.config.js --forceExit",
-    "start": "PORT=8001 node ."
+    "start": "PORT=8002 node ."
   },
   "author": "Ziv Kalderon",
   "license": "ISC",

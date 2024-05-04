@@ -1,6 +1,12 @@
 global:
   scrape_interval: 5s
 scrape_configs:
+  - job_name: "api-gateway"
+    static_configs:
+      - targets: ["api-gatway:8000"]
   - job_name: "chucknorris-service"
     static_configs:
-      - targets: ["chucknorris-service:8000"]
+      - targets: ["chucknorris-service:8001"]
+  - job_name: "notification-service"
+    static_configs:
+      - targets: [ "notification-service:8002" ]

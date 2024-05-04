@@ -13,5 +13,5 @@ const start = async (port) => {
 }
 
 (async () => {
-    await start(process.env.PORT || 8001);
+    await start(process.env.PORT || 8000);
 })()

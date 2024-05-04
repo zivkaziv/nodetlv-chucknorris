@@ -43,22 +43,31 @@ services:
     restart: always
     networks:
       - monitoring
-  chucknorris-service:
+  api-gatway:
     build:
-      context: chucknorris-service
+      context: api-gatway
     ports:
       - 8000:8000
     expose:
       - 8000
     networks:
       - monitoring
-  notification-service:
+  chucknorris-service:
     build:
-      context: notification-service
+      context: chucknorris-service
     ports:
       - 8001:8001
     expose:
       - 8001
+    networks:
+      - monitoring
+  notification-service:
+    build:
+      context: notification-service
+    ports:
+      - 8002:8002
+    expose:
+      - 8002
     networks:
       - monitoring
 networks:
