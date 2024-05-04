@@ -27,6 +27,22 @@ services:
       - 3000
     networks:
       - monitoring
+  rabbitmq:
+    #RabbitMQ
+    image: rabbitmq:3.13.2-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+    volumes:
+      - ./rabbit:/var/lib/rabbitmq
+    restart: always
+    networks:
+      - monitoring
   chucknorris-service:
     build:
       context: chucknorris-service
@@ -34,6 +50,15 @@ services:
       - 8000:8000
     expose:
       - 8000
+    networks:
+      - monitoring
+  notification-service:
+    build:
+      context: notification-service
+    ports:
+      - 8001:8001
+    expose:
+      - 8001
     networks:
       - monitoring
 networks:
