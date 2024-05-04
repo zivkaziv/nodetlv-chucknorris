@@ -5,6 +5,12 @@ const app = express();
 const register = new client.Registry()
 const NotificationService = require('./NotificationService');
 
+const summarySendNotification = new client.Summary({
+    name: 'send_notification',
+    help: 'summary of send notification',
+});
+register.registerMetric(summarySendNotification);
+
 app.get("/metrics", async (req, res) => {
     res.setHeader('Content-Type', register.contentType)
     const metrics = await register.metrics()
@@ -25,7 +31,7 @@ const initNotificationService = async () => {
     })
     const notificationService = new NotificationService(connectionString, notificationServiceQueueName)
     await notificationService.init()
-    await notificationService.consumeMessages()
+    await notificationService.consumeMessages(summarySendNotification)
 }
 
 app.init = async () => {

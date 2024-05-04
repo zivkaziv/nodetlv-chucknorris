@@ -11,16 +11,27 @@ app.use(express.urlencoded({extended: true}))
 const register = new client.Registry();
 const factService = new FactService();
 let queuePublisher = undefined;
+
+const summaryApiRequest = new client.Summary({
+    name: 'api_request',
+    help: 'summary of api_request',
+    labelNames: ['method', 'statusCode', 'endPoint'],
+});
+register.registerMetric(summaryApiRequest);
 app.get("/fact", async (req, res) => {
+    const end = summaryApiRequest.startTimer();
     try {
         const fact = factService.getRandomFact();
         res.json(fact);
+        end({method:"GET", statusCode:"200", endPoint: "fact"})
     } catch (err) {
         res.status(500).json({error: 'failed to get your fact'});
+        end({method:"GET", statusCode:"200", endPoint: "fact"})
     }
 });
 
 app.post("/fact", async (req, res) => {
+    const end = summaryApiRequest.startTimer();
     try {
         const email = req.body.email;
         const isValidEmail = validator.validate(email);
@@ -37,8 +48,10 @@ app.post("/fact", async (req, res) => {
                 is_published
             }
         });
+        end({method:"GET", statusCode:"200", endPoint: "fact"})
     } catch (err) {
         res.status(500).json({error: 'failed to send your fact'});
+        end({method:"GET", statusCode:"200", endPoint: "fact"})
     }
 });
 app.get("/metrics", (req, res) => {
