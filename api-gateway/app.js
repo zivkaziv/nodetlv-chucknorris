@@ -9,7 +9,7 @@ app.use(express.urlencoded({extended: true}))
 const register = new client.Registry();
 const {auth} = require("./auth");
 
-const FACE_SERVICE_URL = process.env.FACT_SERVICE_URL || "http://localhost:8001"
+const FACT_SERVICE_URL = process.env.FACT_SERVICE_URL || "http://localhost:8001"
 app.get("/fact", auth, async (req, res) => {
     try {
         const {data} = await axios.get(`${FACT_SERVICE_URL}/fact`);
