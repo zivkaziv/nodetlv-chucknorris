@@ -22,24 +22,27 @@ app.get("/fact", auth, async (req, res) => {
     try {
         const {data} = await axios.get(`${FACT_SERVICE_URL}/fact`);
         res.json(data);
-        end({method:"GET", statusCode:"200", endPoint: "fact"})
+        end({method: "GET", statusCode: "200", endPoint: "fact"})
     } catch (err) {
         console.log(err);
         res.status(500).json({error: 'failed to get your fact'});
-        end({method:"GET", statusCode:"500", endPoint: "fact"})
+        end({method: "GET", statusCode: "500", endPoint: "fact"})
     }
 });
 
 app.post("/fact", auth, async (req, res) => {
     const end = summaryApiRequest.startTimer();
     try {
-        const {data} = await axios.post(`${FACT_SERVICE_URL}/fact`, req.body);
+        const metadata = {
+            requestReceivedTime: Date.now()
+        }
+        const {data} = await axios.post(`${FACT_SERVICE_URL}/fact`, {...req.body, metadata});
         res.json(data);
-        end({method:"GET", statusCode:"200", endPoint: "fact"})
+        end({method: "GET", statusCode: "200", endPoint: "fact"})
     } catch (err) {
         console.log(err);
         res.status(500).json({error: 'failed to get your fact'});
-        end({method:"GET", statusCode:"500", endPoint: "fact"})
+        end({method: "GET", statusCode: "500", endPoint: "fact"})
     }
 });
 app.get("/metrics", (req, res) => {

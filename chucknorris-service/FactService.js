@@ -12,7 +12,8 @@ module.exports = class FactService {
         });
     }
 
-    getRandomFact() {
+    async getRandomFact() {
+        await this.initFacts()
         return this.facts[Math.floor(Math.random() * this.facts.length)];
     }
 }

@@ -21,7 +21,7 @@ register.registerMetric(summaryApiRequest);
 app.get("/fact", async (req, res) => {
     const end = summaryApiRequest.startTimer();
     try {
-        const fact = factService.getRandomFact();
+        const fact = await factService.getRandomFact();
         res.json(fact);
         end({method:"GET", statusCode:"200", endPoint: "fact"})
     } catch (err) {
@@ -38,7 +38,7 @@ app.post("/fact", async (req, res) => {
         if (!isValidEmail) {
             return res.status(400).json({error: `email ${email} is not valid`})
         }
-        const fact = factService.getRandomFact();
+        const fact = await factService.getRandomFact();
         const is_published = await queuePublisher.publish(fact, email)
         res.json({
             status: "success",
@@ -72,7 +72,7 @@ const initQueuePublisher = async () => {
 }
 
 app.init = async () => {
-    await factService.initFacts();
+    // await factService.initFacts();
     await initQueuePublisher()
     initMetrics();
 }

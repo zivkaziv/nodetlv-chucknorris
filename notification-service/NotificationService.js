@@ -3,6 +3,7 @@ const amqplib = require("amqplib");
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
 const MAX_SLEEP = 500
 const MIN_SLEEP = 50
 module.exports = class NotificationService {
@@ -19,19 +20,24 @@ module.exports = class NotificationService {
         this.channel.assertQueue(this.queueName);
     }
 
-    async sendNotification(msg, summaryMetric) {
+    async sendNotification(msg) {
         const delay = Math.floor(Math.random() * (MAX_SLEEP - MIN_SLEEP + 1)) + MIN_SLEEP;
-        const end = summaryMetric.startTimer();
-        console.log("Message: ", JSON.parse(msg.content));
+        console.log("Message: ", msg);
         await sleep(delay);
-        end();
     }
 
-    async consumeMessages(summaryMetric) {
+    async consumeMessages(summaryMetric, handlingTimeMetric) {
         try {
+            const metric = summaryMetric
+            const handlingMetric = handlingTimeMetric
             await this.channel.consume(this.queueName, async (msg) => {
-                await this.sendNotification(msg, summaryMetric)
+                const jsonMsg = JSON.parse(msg.content)
+                // const endAsyncFlow = handlingMetric.startTimer(jsonMsg.metadata.requestReceivedTime)
+                const end = metric.startTimer();
+                await this.sendNotification(jsonMsg)
                 this.channel.ack(msg);
+                // endAsyncFlow();
+                end();
             });
             console.log("Read message from CONSUMER \n");
         } catch (error) {

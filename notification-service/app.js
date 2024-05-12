@@ -9,7 +9,13 @@ const summarySendNotification = new client.Summary({
     name: 'send_notification',
     help: 'summary of send notification',
 });
+
+const summaryRequestHandlingTime = new client.Summary({
+    name: 'api_request_async',
+    help: 'Async handling time',
+});
 register.registerMetric(summarySendNotification);
+register.registerMetric(summaryRequestHandlingTime);
 
 app.get("/metrics", async (req, res) => {
     res.setHeader('Content-Type', register.contentType)
@@ -31,7 +37,7 @@ const initNotificationService = async () => {
     })
     const notificationService = new NotificationService(connectionString, notificationServiceQueueName)
     await notificationService.init()
-    await notificationService.consumeMessages(summarySendNotification)
+    await notificationService.consumeMessages(summarySendNotification, summaryRequestHandlingTime)
 }
 
 app.init = async () => {
