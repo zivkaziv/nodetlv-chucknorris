@@ -32,11 +32,14 @@ module.exports = class NotificationService {
             const handlingMetric = handlingTimeMetric
             await this.channel.consume(this.queueName, async (msg) => {
                 const jsonMsg = JSON.parse(msg.content)
-                // const endAsyncFlow = handlingMetric.startTimer(jsonMsg.metadata.requestReceivedTime)
+                console.log(jsonMsg);
                 const end = metric.startTimer();
                 await this.sendNotification(jsonMsg)
                 this.channel.ack(msg);
-                // endAsyncFlow();
+                if(jsonMsg?.metadata?.requestReceivedTime){
+                    const duration = Date.now() - jsonMsg.metadata.requestReceivedTime;
+                    handlingMetric.observe(duration)
+                }
                 end();
             });
             console.log("Read message from CONSUMER \n");
