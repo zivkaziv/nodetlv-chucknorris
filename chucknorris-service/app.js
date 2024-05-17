@@ -33,13 +33,13 @@ app.get("/fact", async (req, res) => {
 app.post("/fact", async (req, res) => {
     const end = summaryApiRequest.startTimer();
     try {
-        const email = req.body.email;
+        const {email, metadata} = req.body;
         const isValidEmail = validator.validate(email);
         if (!isValidEmail) {
             return res.status(400).json({error: `email ${email} is not valid`})
         }
         const fact = await factService.getRandomFact();
-        const is_published = await queuePublisher.publish(fact, email)
+        const is_published = await queuePublisher.publish(fact, email, metadata)
         res.json({
             status: "success",
             data: {

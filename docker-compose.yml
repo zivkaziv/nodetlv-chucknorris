@@ -101,7 +101,7 @@ services:
       - rabbitmq
 configs:
   plugins:
-    content: "[rabbitmq_prometheus]."
+    content: "[rabbitmq_prometheus, rabbitmq_management]."
 networks:
   app-network:
     driver: bridge

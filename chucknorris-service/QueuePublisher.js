@@ -14,11 +14,12 @@ module.exports = class QueuePublisher {
         this.channel.assertQueue(this.queueName);
     }
 
-    async publish(fact, email){
+    async publish(fact, email, metadata){
         return await this.channel.sendToQueue(
             this.queueName,
             Buffer.from(JSON.stringify({
                 fact,
+                metadata,
                 email
             }))
         );
