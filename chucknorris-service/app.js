@@ -48,10 +48,10 @@ app.post("/fact", async (req, res) => {
                 is_published
             }
         });
-        end({method:"GET", statusCode:"200", endPoint: "fact"})
+        end({method:"POST", statusCode:"200", endPoint: "fact"})
     } catch (err) {
         res.status(500).json({error: 'failed to send your fact'});
-        end({method:"GET", statusCode:"200", endPoint: "fact"})
+        end({method:"POST", statusCode:"200", endPoint: "fact"})
     }
 });
 app.get("/metrics", (req, res) => {

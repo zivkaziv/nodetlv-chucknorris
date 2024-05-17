@@ -38,11 +38,11 @@ app.post("/fact", auth, async (req, res) => {
         }
         const {data} = await axios.post(`${FACT_SERVICE_URL}/fact`, {...req.body, metadata});
         res.json(data);
-        end({method: "GET", statusCode: "200", endPoint: "fact"})
+        end({method: "POST", statusCode: "200", endPoint: "fact"})
     } catch (err) {
         console.log(err);
         res.status(500).json({error: 'failed to get your fact'});
-        end({method: "GET", statusCode: "500", endPoint: "fact"})
+        end({method: "POST", statusCode: "500", endPoint: "fact"})
     }
 });
 app.get("/metrics", (req, res) => {

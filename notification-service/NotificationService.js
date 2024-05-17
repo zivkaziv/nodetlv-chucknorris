@@ -32,12 +32,12 @@ module.exports = class NotificationService {
             const handlingMetric = handlingTimeMetric
             await this.channel.consume(this.queueName, async (msg) => {
                 const jsonMsg = JSON.parse(msg.content)
-                console.log(jsonMsg);
                 const end = metric.startTimer();
                 await this.sendNotification(jsonMsg)
                 this.channel.ack(msg);
-                if(jsonMsg?.metadata?.requestReceivedTime){
+                if (jsonMsg?.metadata?.requestReceivedTime) {
                     const duration = Date.now() - jsonMsg.metadata.requestReceivedTime;
+                    console.log({duration})
                     handlingMetric.observe(duration)
                 }
                 end();
