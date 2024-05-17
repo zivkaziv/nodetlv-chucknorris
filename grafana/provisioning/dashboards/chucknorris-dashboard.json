@@ -198,32 +198,7 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "0.9"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 5,
@@ -236,7 +211,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "right",
+          "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
@@ -253,12 +228,12 @@
           "disableTextWrap": false,
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(rate(api_request{statusCode=\"200\", quantile=\"0.95\"}[$__interval])) by (app)",
+          "expr": "rate(api_request{quantile=\"0.95\", statusCode=\"200\"}[$__interval])",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "{{quantile}}",
+          "legendFormat": "{{app}}",
           "range": true,
           "refId": "A",
           "useBackend": false
@@ -269,10 +244,10 @@
             "uid": "bdkp9n3inkglcc"
           },
           "editorMode": "code",
-          "expr": "sum(rate(send_notification{quantile=\"0.95\"}[$__interval])) by (app)",
+          "expr": "rate(send_notification{quantile=\"0.95\"}[$__interval])",
           "hide": false,
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "{{app}}",
           "range": true,
           "refId": "B"
         }
@@ -603,7 +578,7 @@
     "list": []
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -622,6 +597,6 @@
   "timezone": "",
   "title": "Chuck Norris Dashboard",
   "uid": "1DYaynomMk",
-  "version": 3,
+  "version": 6,
   "weekStart": ""
 }

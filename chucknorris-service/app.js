@@ -19,19 +19,21 @@ const summaryApiRequest = new client.Summary({
 });
 register.registerMetric(summaryApiRequest);
 app.get("/fact", async (req, res) => {
-    const end = summaryApiRequest.startTimer();
+    const startTime = Date.now()
     try {
         const fact = await factService.getRandomFact();
         res.json(fact);
-        end({method:"GET", statusCode:"200", endPoint: "fact"})
+        const duration = Date.now() - startTime;
+        summaryApiRequest.labels("GET", "200", "fact").observe(duration)
     } catch (err) {
         res.status(500).json({error: 'failed to get your fact'});
-        end({method:"GET", statusCode:"200", endPoint: "fact"})
+        const duration = Date.now() - startTime;
+        summaryApiRequest.labels("GET", "500", "fact").observe(duration)
     }
 });
 
 app.post("/fact", async (req, res) => {
-    const end = summaryApiRequest.startTimer();
+    const startTime = Date.now()
     try {
         const {email, metadata} = req.body;
         const isValidEmail = validator.validate(email);
@@ -48,10 +50,12 @@ app.post("/fact", async (req, res) => {
                 is_published
             }
         });
-        end({method:"POST", statusCode:"200", endPoint: "fact"})
+        const duration = Date.now() - startTime;
+        summaryApiRequest.labels("POST", "200", "fact").observe(duration)
     } catch (err) {
         res.status(500).json({error: 'failed to send your fact'});
-        end({method:"POST", statusCode:"200", endPoint: "fact"})
+        const duration = Date.now() - startTime;
+        summaryApiRequest.labels("POST", "500", "fact").observe(duration)
     }
 });
 app.get("/metrics", (req, res) => {

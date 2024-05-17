@@ -4,7 +4,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const MAX_SLEEP = 500
+const MAX_SLEEP = 900
 const MIN_SLEEP = 50
 module.exports = class NotificationService {
     constructor(connectionString, queueName) {
@@ -32,7 +32,7 @@ module.exports = class NotificationService {
             const handlingMetric = handlingTimeMetric
             await this.channel.consume(this.queueName, async (msg) => {
                 const jsonMsg = JSON.parse(msg.content)
-                const end = metric.startTimer();
+                const startTime = Date.now()
                 await this.sendNotification(jsonMsg)
                 this.channel.ack(msg);
                 if (jsonMsg?.metadata?.requestReceivedTime) {
@@ -40,7 +40,8 @@ module.exports = class NotificationService {
                     console.log({duration})
                     handlingMetric.observe(duration)
                 }
-                end();
+                const consumeMessageDuration = Date.now() - startTime;
+                metric.observe(consumeMessageDuration);
             });
             console.log("Read message from CONSUMER \n");
         } catch (error) {
