@@ -30,7 +30,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "bdkp9n3inkglcc"
+        "uid": "admbgffvk2t4we"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -72,7 +72,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "bdkp9n3inkglcc"
+            "uid": "admbgffvk2t4we"
           },
           "expr": "irate(process_cpu_user_seconds_total{instance=~\"$instance\"}[2m]) * 100",
           "format": "time_series",
@@ -83,7 +83,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "bdkp9n3inkglcc"
+            "uid": "admbgffvk2t4we"
           },
           "expr": "irate(process_cpu_system_seconds_total{instance=~\"$instance\"}[2m]) * 100",
           "format": "time_series",
@@ -129,7 +129,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "bdkp9n3inkglcc"
+        "uid": "admbgffvk2t4we"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -171,7 +171,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "bdkp9n3inkglcc"
+            "uid": "admbgffvk2t4we"
           },
           "expr": "nodejs_eventloop_lag_seconds{instance=~\"$instance\"}",
           "format": "time_series",
@@ -213,7 +213,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "bdkp9n3inkglcc"
+        "uid": "admbgffvk2t4we"
       },
       "fieldConfig": {
         "defaults": {
@@ -278,7 +278,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "bdkp9n3inkglcc"
+            "uid": "admbgffvk2t4we"
           },
           "expr": "sum(nodejs_version_info{instance=~\"$instance\"}) by (version)",
           "format": "time_series",
@@ -295,7 +295,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "bdkp9n3inkglcc"
+        "uid": "admbgffvk2t4we"
       },
       "fieldConfig": {
         "defaults": {
@@ -360,7 +360,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "bdkp9n3inkglcc"
+            "uid": "admbgffvk2t4we"
           },
           "expr": "sum(changes(process_start_time_seconds{instance=~\"$instance\"}[1m]))",
           "format": "time_series",
@@ -379,7 +379,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "bdkp9n3inkglcc"
+        "uid": "admbgffvk2t4we"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -422,7 +422,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "bdkp9n3inkglcc"
+            "uid": "admbgffvk2t4we"
           },
           "expr": "process_resident_memory_bytes{instance=~\"$instance\"}",
           "format": "time_series",
@@ -433,7 +433,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "bdkp9n3inkglcc"
+            "uid": "admbgffvk2t4we"
           },
           "expr": "nodejs_heap_size_total_bytes{instance=~\"$instance\"}",
           "format": "time_series",
@@ -444,7 +444,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "bdkp9n3inkglcc"
+            "uid": "admbgffvk2t4we"
           },
           "expr": "nodejs_heap_size_used_bytes{instance=~\"$instance\"}",
           "format": "time_series",
@@ -455,7 +455,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "bdkp9n3inkglcc"
+            "uid": "admbgffvk2t4we"
           },
           "expr": "nodejs_external_memory_bytes{instance=~\"$instance\"}",
           "format": "time_series",
@@ -501,7 +501,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "bdkp9n3inkglcc"
+        "uid": "admbgffvk2t4we"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -543,7 +543,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "bdkp9n3inkglcc"
+            "uid": "admbgffvk2t4we"
           },
           "expr": "nodejs_active_handles_total{instance=~\"$instance\"}",
           "format": "time_series",
@@ -554,7 +554,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "bdkp9n3inkglcc"
+            "uid": "admbgffvk2t4we"
           },
           "expr": "nodejs_active_requests_total{instance=~\"$instance\"}",
           "format": "time_series",
@@ -600,7 +600,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "bdkp9n3inkglcc"
+        "uid": "admbgffvk2t4we"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -643,7 +643,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "bdkp9n3inkglcc"
+            "uid": "admbgffvk2t4we"
           },
           "expr": "nodejs_heap_space_size_total_bytes{instance=~\"$instance\"}",
           "format": "time_series",
@@ -689,7 +689,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "bdkp9n3inkglcc"
+        "uid": "admbgffvk2t4we"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -732,7 +732,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "bdkp9n3inkglcc"
+            "uid": "admbgffvk2t4we"
           },
           "expr": "nodejs_heap_space_size_used_bytes{instance=~\"$instance\"}",
           "format": "time_series",
@@ -778,7 +778,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "bdkp9n3inkglcc"
+        "uid": "admbgffvk2t4we"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -821,7 +821,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "bdkp9n3inkglcc"
+            "uid": "admbgffvk2t4we"
           },
           "expr": "nodejs_heap_space_size_available_bytes{instance=~\"$instance\"}",
           "format": "time_series",
@@ -875,7 +875,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "bdkp9n3inkglcc"
+          "uid": "admbgffvk2t4we"
         },
         "definition": "label_values(nodejs_version_info, instance)",
         "hide": 0,

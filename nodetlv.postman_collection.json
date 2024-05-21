@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "d325ef69-c703-4c9c-a63d-66eb8d3a4175",
+		"name": "nodetlv",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8896628"
+	},
+	"item": [
+		{
+			"name": "get fact",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1111-2222-3333",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/fact",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"fact"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "send fact by email",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1111-2222-3333",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"nodetlv@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/fact",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"fact"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
